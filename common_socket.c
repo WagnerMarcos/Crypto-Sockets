@@ -77,7 +77,8 @@ int socket_connect(socket_t *self, const char *host_name, const char *service){
     hints.ai_socktype = SOCK_STREAM; 
     hints.ai_protocol = 0;
     hints.ai_flags = 0;
-    skt = getaddrinfo(host_name, service, &hints, &result);      
+    skt = getaddrinfo(host_name, service, &hints, &result);
+
     if (skt != 0) {
         close(self->socket);
         return ERROR;
@@ -100,6 +101,7 @@ int socket_send(socket_t *self, const char *buffer, size_t buf_l){
     size_t bytes_sent, s;
     bytes_sent = 0;
     int sckt = self->socket;
+
     while (bytes_sent < buf_l){
         s = 0;
         s = send(sckt, &buffer[bytes_sent], buf_l - bytes_sent, 0);
@@ -111,10 +113,12 @@ int socket_send(socket_t *self, const char *buffer, size_t buf_l){
     return 0;
 }
  
-int socket_recv(socket_t *self, char *buffer, size_t buf_l, size_t *bytes_recv, bool *sckt_valid){
+int socket_recv(socket_t *self, char *buffer, size_t buf_l, 
+                size_t *bytes_recv, bool *sckt_valid){
     int r;
     *bytes_recv = 0;
     int sckt = self->socket;
+
     while (*bytes_recv < buf_l && *sckt_valid == true){
         r = 0;
         r = recv(sckt, &buffer[*bytes_recv], buf_l - *bytes_recv, 0);

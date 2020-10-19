@@ -21,8 +21,8 @@ int main(int argc, char* argv[]){
 void encrypt_with_caesar(socket_t* s, char *key){
 	bool there_is_text=true;
 	unsigned int buf_l = 64;
-	char buffer[buf_l];
-	unsigned char encrypted_text[buf_l];
+	char buffer[64];
+	unsigned char encrypted_text[64];
 	size_t read_bytes = 0;
 	caesar_cipher_t c;
 	caesar_init(&c, 5);
@@ -36,8 +36,8 @@ void encrypt_with_caesar(socket_t* s, char *key){
 void encrypt_with_vigenere(socket_t* s, char *key){
 	bool there_is_text=true;
 	unsigned int buf_l = 64;
-	char buffer[buf_l];
-	unsigned char encrypted_text[buf_l];
+	char buffer[64];
+	unsigned char encrypted_text[64];
 	size_t read_bytes = 0;
 	vigenere_cipher_t c;
 	vigenere_init(&c, key);
@@ -51,8 +51,8 @@ void encrypt_with_vigenere(socket_t* s, char *key){
 void encrypt_with_rc4(socket_t* s, char *key){
 	bool there_is_text=true;
 	unsigned int buf_l = 64;
-	char buffer[buf_l];
-	unsigned char encrypted_text[buf_l];
+	char buffer[64];
+	unsigned char encrypted_text[64];
 	size_t read_bytes = 0;
 	rc4_cipher_t c;
 	rc4_init(&c, key);
@@ -62,7 +62,8 @@ void encrypt_with_rc4(socket_t* s, char *key){
 		socket_send(s, (char*)encrypted_text, read_bytes);
 	}
 }
-size_t reader_get_text(bool *there_is_text, char buffer[], size_t buffer_size){
+size_t reader_get_text(bool *there_is_text, char buffer[], 
+						size_t buffer_size){
 	size_t result = 0;
 	if((result = fread(buffer, 1, buffer_size, stdin)) != buffer_size)
 		if(feof(stdin))	

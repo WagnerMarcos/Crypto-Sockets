@@ -1,8 +1,10 @@
 #include "common_rc4.h"
 #include <stdio.h>
-int rc4_string_to_uchar_arr(unsigned char uchar_arr[], char string[], unsigned int l){
+
+int rc4_string_to_uchar_arr(unsigned char uchar_arr[], 
+                            char string[], unsigned int l){
     int i = 0;
-    for (i=0; i<l;i++){
+    for (i = 0; i < l; i++){
         uchar_arr[i]=(unsigned char) string[i];
     }
     return 0;
@@ -29,8 +31,10 @@ void rc4_init(rc4_cipher_t *c, char *key){
         rc4_swap(c->S, i, j);  
     }
 }
+
 /* PRGA */
-void rc4_output(rc4_cipher_t *c, unsigned char *new_str, char *message, unsigned int l){
+void rc4_output(rc4_cipher_t *c, unsigned char *new_str, 
+                char *message, unsigned int l){
     unsigned char ch = 0;
     int k = 0;
     unsigned char aux_buf[64];
