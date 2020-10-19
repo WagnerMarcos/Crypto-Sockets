@@ -6,17 +6,15 @@ int main(int argc, char* argv[]){
 	socket_init(&s);
 	socket_bind_and_listen(&s, argv[1]);
     socket_accept(&s, &p); 
-	FILE* output = fopen("output", "wb");
 	if (strcmp(argv[2], "--method=cesar") == 0){
-		deencrypt_with_caesar(&p, argv[3]+6, output);
+		deencrypt_with_caesar(&p, argv[3]+6, stdout);
 	}
 	if (strcmp(argv[2], "--method=vigenere") == 0){
-		deencrypt_with_vigenere(&p, argv[3]+6, output);
+		deencrypt_with_vigenere(&p, argv[3]+6, stdout);
 	}
 	if (strcmp(argv[2], "--method=rc4") == 0){
-		deencrypt_with_rc4(&p, argv[3]+6, output);
+		deencrypt_with_rc4(&p, argv[3]+6, stdout);
 	}
-	fclose(output);
     socket_shutdown(&s, SHUT_RDWR);
     socket_shutdown(&p, SHUT_RDWR);
     socket_destroy(&s);
