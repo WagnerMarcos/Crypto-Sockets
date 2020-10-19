@@ -33,8 +33,7 @@ void deencrypt_with_caesar(socket_t* s, char *key, FILE* fp){
 	caesar_cipher_t c;
 	caesar_init(&c, 5);
 
-	while(there_is_text){
-		read_bytes = 0;
+	while (there_is_text){
 		socket_recv(s, (char*)encrypted_text, buf_l, &read_bytes, 
 					&there_is_text);
 		caesar_deencrypt(&c, buffer, encrypted_text, read_bytes);		
@@ -52,7 +51,6 @@ void deencrypt_with_vigenere(socket_t* s, char *key, FILE* fp){
 	vigenere_init(&c, key);
 
 	while(there_is_text){
-		read_bytes = 0;
 		socket_recv(s, (char*)encrypted_text, buf_l, &read_bytes, 
 					&there_is_text);
 		vigenere_deencrypt(&c, buffer, encrypted_text, read_bytes);

@@ -43,10 +43,6 @@ int socket_bind_and_listen(socket_t *self, const char *service){
         }
         close(self->socket);
         socket_init(self);
-        if (rp == NULL) {              
-            close(self->socket);
-            return ERROR;
-        }
     }
     freeaddrinfo(results); /* libero lista de direcciones. */
     if (listen(self->socket, 10) == -1){ 
@@ -98,12 +94,12 @@ int socket_connect(socket_t *self, const char *host_name, const char *service){
 }
 
 int socket_send(socket_t *self, const char *buffer, size_t buf_l){
-    size_t bytes_sent, s;
+    size_t bytes_sent;
     bytes_sent = 0;
     int sckt = self->socket;
 
     while (bytes_sent < buf_l){
-        s = 0;
+        int s = 0;
         s = send(sckt, &buffer[bytes_sent], buf_l - bytes_sent, 0);
         if (s <= 0){ 
             return ERROR;
@@ -115,12 +111,11 @@ int socket_send(socket_t *self, const char *buffer, size_t buf_l){
  
 int socket_recv(socket_t *self, char *buffer, size_t buf_l, 
                 size_t *bytes_recv, bool *sckt_valid){
-    int r;
     *bytes_recv = 0;
     int sckt = self->socket;
 
     while (*bytes_recv < buf_l && *sckt_valid == true){
-        r = 0;
+        int r = 0;
         r = recv(sckt, &buffer[*bytes_recv], buf_l - *bytes_recv, 0);
         if (r < 0){
             *sckt_valid = false;

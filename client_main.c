@@ -23,12 +23,11 @@ void encrypt_with_caesar(socket_t* s, char *key){
 	unsigned int buf_l = 64;
 	char buffer[64];
 	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
 	caesar_cipher_t c;
 	caesar_init(&c, 5);
 
-	while(there_is_text){
-		read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
+	while (there_is_text){
+		size_t read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
 		caesar_encrypt(&c, buffer, encrypted_text, read_bytes);
 		socket_send(s, (char*)encrypted_text, read_bytes);
 	}
@@ -38,12 +37,11 @@ void encrypt_with_vigenere(socket_t* s, char *key){
 	unsigned int buf_l = 64;
 	char buffer[64];
 	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
 	vigenere_cipher_t c;
 	vigenere_init(&c, key);
 
-	while(there_is_text){
-		read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
+	while (there_is_text){
+		size_t read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
 		vigenere_encrypt(&c, buffer, encrypted_text, read_bytes);
 		socket_send(s, (char*)encrypted_text, read_bytes);
 	}
@@ -53,11 +51,11 @@ void encrypt_with_rc4(socket_t* s, char *key){
 	unsigned int buf_l = 64;
 	char buffer[64];
 	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
 	rc4_cipher_t c;
 	rc4_init(&c, key);
-	while(there_is_text){
-		read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
+
+	while (there_is_text){
+		size_t read_bytes = reader_get_text(&there_is_text, buffer, buf_l);
 		rc4_output(&c, encrypted_text, buffer, read_bytes);
 		socket_send(s, (char*)encrypted_text, read_bytes);
 	}

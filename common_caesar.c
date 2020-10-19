@@ -20,5 +20,4 @@ void caesar_deencrypt(caesar_cipher_t *c, char *msg,
 
 void caesar_init(caesar_cipher_t *c, int key){
 	c->key = key;
-
 }

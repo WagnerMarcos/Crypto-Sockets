@@ -18,7 +18,7 @@ void vigenere_init(vigenere_cipher_t *c, char *key){
     int i = 0;
 	c->i = 0;
 
-    while(key[i] != 0){
+    while (key[i] != 0){
         c->key[i] = key[i];
         i++;
     }
