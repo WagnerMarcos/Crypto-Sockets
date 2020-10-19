@@ -2,15 +2,21 @@
 
 void vigenere_encrypt(vigenere_cipher_t *c, char *msg, 
 						unsigned char *encrypted, unsigned int l){
+	int i = 0;
+	
 	for(c->i=0; c->i<l; c->i++){
-		encrypted[c->i] = (msg[c->i]+(c->key)[c->i%c->key_l]);		// Encripto
+		encrypted[i] = (msg[i] + (c->key)[c->i%c->key_l]);		// Encripto
+		i++;
 	}
 }
 
 void vigenere_deencrypt(vigenere_cipher_t *c, char *deencrypted, 
 						unsigned char *msg, unsigned int l){
+	int i = 0;
+	
 	for(c->i = 0; c->i < l; c->i++){
-		deencrypted[c->i] = (char) msg[c->i] - (c->key)[c->i%c->key_l] % 255;
+		deencrypted[i] = (char) msg[i] - (c->key)[c->i%c->key_l] %255;
+		i++;
 	}
 }
 
@@ -24,3 +30,4 @@ void vigenere_init(vigenere_cipher_t *c, char *key){
     }
 	c->key_l = i;
 }
+
