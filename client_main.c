@@ -1,8 +1,8 @@
 #include "client_main.h"
 
 int main(int argc, char* argv[]){
-	char method[MAX_METHOD_LENGTH];
-	char key[MAX_KEY_LENGTH];
+	char method[MAX_METHOD_LENGTH] = {0};
+	char key[MAX_KEY_LENGTH] = {0};
 
 	socket_t s;
 
