@@ -1,19 +1,28 @@
 #include "server_main.h"
 
 int main(int argc, char* argv[]){
+	char method[MAX_METHOD_LENGTH];
+	char key[MAX_KEY_LENGTH];
 	socket_t s;
     socket_t p;
+
+	if(parse_method(argv[2], method) != 0)
+		return ERROR;
+	if(parse_key(argv[3], key) != 0)
+		return ERROR;
+
 	socket_init(&s);
 	socket_bind_and_listen(&s, argv[1]);
     socket_accept(&s, &p); 
-	if (strcmp(argv[2], "--method=cesar") == 0){
-		deencrypt_with_caesar(&p, argv[3]+6, stdout);
+
+	if (strcmp(method, "cesar") == 0){
+		deencrypt_with_caesar(&p, key, stdout);
 	}
-	if (strcmp(argv[2], "--method=vigenere") == 0){
-		deencrypt_with_vigenere(&p, argv[3]+6, stdout);
+	if (strcmp(method, "vigenere") == 0){
+		deencrypt_with_vigenere(&p, key, stdout);
 	}
-	if (strcmp(argv[2], "--method=rc4") == 0){
-		deencrypt_with_rc4(&p, argv[3]+6, stdout);
+	if (strcmp(method, "rc4") == 0){
+		deencrypt_with_rc4(&p, key, stdout);
 	}
     socket_shutdown(&s, SHUT_RDWR);
     socket_shutdown(&p, SHUT_RDWR);
@@ -21,58 +30,39 @@ int main(int argc, char* argv[]){
     socket_destroy(&p);
 	return 0;
 }
-    
-void deencrypt_with_caesar(socket_t* s, char *key, FILE* fp){
-	bool there_is_text=true;
-	unsigned int buf_l = 64;
-	char buffer[64];
-	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
-	caesar_cipher_t c;
-	caesar_init(&c, 5);
 
-	while (there_is_text){
-		socket_recv(s, (char*)encrypted_text, buf_l, &read_bytes, 
-					&there_is_text);
-		caesar_deencrypt(&c, buffer, encrypted_text, read_bytes);		
-		print_data(fp, buffer, read_bytes);
+int parse_method(char* arg, char* method){
+	int i;
+	int j = 0;
+	bool equals = true;
+	for(i = 0; i < METHOD_ARG_LENGTH && equals; i++){
+		if(arg[i] != METHOD_ARG[i]){
+			return 1;
+		}
 	}
+
+	while (arg[i] != '\0' && j < MAX_METHOD_LENGTH){
+		method[j] = arg[i];
+		i++;
+		j++;
+	}
+	return 0;
 }
 
-void deencrypt_with_vigenere(socket_t* s, char *key, FILE* fp){
-	bool there_is_text=true;
-	unsigned int buf_l = 64;
-	char buffer[64];
-	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
-	vigenere_cipher_t c;
-	vigenere_init(&c, key);
-
-	while(there_is_text){
-		socket_recv(s, (char*)encrypted_text, buf_l, &read_bytes, 
-					&there_is_text);
-		vigenere_deencrypt(&c, buffer, encrypted_text, read_bytes);
-		print_data(fp, buffer, read_bytes);
+int parse_key(char *arg, char *key){
+	int i;
+	int j = 0;
+	bool equals = true;
+	for(i = 0; i < KEY_ARG_LENGTH && equals; i++){
+		if(arg[i] != KEY_ARG[i]){
+			return 1;
+		}
 	}
-}
 
-void deencrypt_with_rc4(socket_t* s, char *key, FILE* fp){
-	bool there_is_text=true;
-	unsigned int buf_l = 64;
-	char buffer[64];
-	unsigned char encrypted_text[64];
-	size_t read_bytes = 0;
-	rc4_cipher_t c;
-	rc4_init(&c, key);
-
-	while(there_is_text){
-		socket_recv(s, buffer, buf_l, &read_bytes, 
-					&there_is_text);
-		rc4_output(&c, encrypted_text, buffer, read_bytes);
-		print_data(fp, (char*)encrypted_text, read_bytes);
+	while (arg[i] != '\0' && j < MAX_KEY_LENGTH){
+		key[j] = arg[i];
+		i++;
+		j++;
 	}
-}
-
-void print_data(FILE* fp, char* buffer,unsigned int data_size){
-	fwrite(buffer, 1, data_size, fp);
+	return 0;
 }

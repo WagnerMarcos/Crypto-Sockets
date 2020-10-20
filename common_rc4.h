@@ -1,6 +1,7 @@
 #ifndef RC4__T
 #define RC4__T
 
+#include <stdio.h>
 #include <string.h>
 
 typedef struct rc4_cipher_t{
@@ -11,7 +12,7 @@ typedef struct rc4_cipher_t{
     unsigned char S[256];
 }rc4_cipher_t;
 
-int rc4_string_to_uchar_arr(unsigned char uchar_arr[], 
+int rc4_char_to_uchar(unsigned char uchar_arr[], 
                             char string[], unsigned int l);
 void rc4_swap(unsigned char *s, unsigned int i, unsigned int j);
 void rc4_init(rc4_cipher_t *c, char *key);

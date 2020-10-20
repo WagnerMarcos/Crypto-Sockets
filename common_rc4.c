@@ -1,7 +1,6 @@
 #include "common_rc4.h"
-#include <stdio.h>
 
-int rc4_string_to_uchar_arr(unsigned char uchar_arr[], 
+int rc4_char_to_uchar(unsigned char uchar_arr[], 
                             char string[], unsigned int l){
     int i = 0;
 
@@ -23,7 +22,7 @@ void rc4_init(rc4_cipher_t *c, char *key){
     c->j = 0;
     int i = 0;          // Uso un par i,j distinto solo para que sea mas legible
     int j = 0;
-    rc4_string_to_uchar_arr(c->key,key, strlen(key));
+    rc4_char_to_uchar(c->key,key, strlen(key));
     c->key_l = strlen(key);
 
     for (i = 0; i < 256; i++)
@@ -39,7 +38,7 @@ void rc4_output(rc4_cipher_t *c, unsigned char *new_str,
                 char *message, unsigned int l){
     int k = 0;
     unsigned char aux_buf[64];
-    rc4_string_to_uchar_arr(aux_buf, message, l);
+    rc4_char_to_uchar(aux_buf, message, l);
 
     for (k = 0; k < l; k++){ 
         c->i = (c->i + 1) % (256);
