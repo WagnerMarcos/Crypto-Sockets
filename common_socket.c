@@ -100,7 +100,7 @@ int socket_send(socket_t *self, const char *buffer, size_t buf_l){
 
     while (bytes_sent < buf_l){
         int s = 0;
-        s = send(sckt, &buffer[bytes_sent], buf_l - bytes_sent, 0);
+        s = send(sckt, &buffer[bytes_sent], buf_l - bytes_sent, MSG_NOSIGNAL);
         if (s <= 0){ 
             return ERROR;
         }
@@ -110,18 +110,18 @@ int socket_send(socket_t *self, const char *buffer, size_t buf_l){
 }
  
 int socket_recv(socket_t *self, char *buffer, size_t buf_l, 
-                size_t *bytes_recv, bool *sckt_valid){
+                size_t *bytes_recv, bool *sckt_open){
     *bytes_recv = 0;
     int sckt = self->socket;
 
-    while (*bytes_recv < buf_l && *sckt_valid == true){
+    while (*bytes_recv < buf_l && *sckt_open == true){
         int r = 0;
         r = recv(sckt, &buffer[*bytes_recv], buf_l - *bytes_recv, 0);
         if (r < 0){
-            *sckt_valid = false;
+            *sckt_open = false;
             return ERROR;
         }else if (r == 0){
-            *sckt_valid = false;
+            *sckt_open = false;
         }else{
             *bytes_recv += r;
         }
