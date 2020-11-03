@@ -24,3 +24,5 @@ El servidor luego de preparar la conexión por sockets y verificar que se eligi�
 La lógica que se utilizó es que el transmisor debe tener la capacidad de recibir un mensaje y enviarlo encriptado, y el que el receptor debe poder recibir un mensaje encriptado y mostrarlo de una manera legible al usuario.
 
 Todo el trabajo se realizó sin hacer uso de memoria dinámica.
+
+![Diagrama de secuencia](https://github.com/WagnerMarcos/Crypto-Sockets/blob/main/tp1.png?raw=true)
