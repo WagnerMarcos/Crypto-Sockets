@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
 	socket_bind_and_listen(&s, argv[1]);
     socket_accept(&s, &p); 
 
-	deencrypt(&s, key, stdout, method);
+	deencrypt(&p, key, stdout, method);
 
     socket_shutdown(&s, SHUT_RDWR);
     socket_shutdown(&p, SHUT_RDWR);
