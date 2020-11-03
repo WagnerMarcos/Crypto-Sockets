@@ -10,6 +10,7 @@
 #include "common_vigenere.h"
 #include "common_rc4.h"
 
+void encrypt(socket_t* s, char *key, char* method);
 size_t reader_get_text(bool *there_is_text, char buffer[], size_t buffer_size);
 void encrypt_with_caesar(socket_t* s, char *key);
 void encrypt_with_vigenere(socket_t* s, char *key);

@@ -13,15 +13,9 @@ int main(int argc, char* argv[]){
 
 	socket_init(&s);
     socket_connect(&s, argv[1], argv[2]);
-	if (strcmp(method, "cesar") == 0){
-		encrypt_with_caesar(&s, key);
-	}
-	if (strcmp(method, "vigenere") == 0){
-		encrypt_with_vigenere(&s, key);
-	}
-	if (strcmp(method, "rc4") == 0){
-		encrypt_with_rc4(&s, key);
-	}
+
+	encrypt(&s, key, method);
+
 	socket_shutdown(&s, SHUT_RDWR);
     socket_destroy(&s);
 	return 0;

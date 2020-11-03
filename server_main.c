@@ -15,15 +15,8 @@ int main(int argc, char* argv[]){
 	socket_bind_and_listen(&s, argv[1]);
     socket_accept(&s, &p); 
 
-	if (strcmp(method, "cesar") == 0){
-		deencrypt_with_caesar(&p, key, stdout);
-	}
-	if (strcmp(method, "vigenere") == 0){
-		deencrypt_with_vigenere(&p, key, stdout);
-	}
-	if (strcmp(method, "rc4") == 0){
-		deencrypt_with_rc4(&p, key, stdout);
-	}
+	deencrypt(&s, key, stdout, method);
+
     socket_shutdown(&s, SHUT_RDWR);
     socket_shutdown(&p, SHUT_RDWR);
     socket_destroy(&s);

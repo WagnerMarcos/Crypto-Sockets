@@ -1,5 +1,17 @@
 #include "client_transmitter.h"
 
+void encrypt(socket_t* s, char *key, char* method){
+	if (strcmp(method, "cesar") == 0){
+		encrypt_with_caesar(s, key);
+	}
+	if (strcmp(method, "vigenere") == 0){
+		encrypt_with_vigenere(s, key);
+	}
+	if (strcmp(method, "rc4") == 0){
+		encrypt_with_rc4(s, key);
+	}
+}
+
 void encrypt_with_caesar(socket_t* s, char *key){
 	bool there_is_text=true;
 	unsigned int buf_l = 64;

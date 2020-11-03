@@ -10,6 +10,7 @@
 #include "common_vigenere.h"
 #include "common_rc4.h"
 
+void deencrypt(socket_t* s, char *key, FILE* fp, char* method);
 void deencrypt_with_caesar(socket_t* s, char *key, FILE* fp);
 void deencrypt_with_vigenere(socket_t* s, char *key, FILE* fp);
 void deencrypt_with_rc4(socket_t* s, char *key, FILE* fp);

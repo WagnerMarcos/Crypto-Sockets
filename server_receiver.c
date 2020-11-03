@@ -1,5 +1,17 @@
 #include "server_receiver.h"
 
+void deencrypt(socket_t* p, char *key, FILE* fp, char* method){
+	if (strcmp(method, "cesar") == 0){
+		deencrypt_with_caesar(p, key, fp);
+	}
+	if (strcmp(method, "vigenere") == 0){
+		deencrypt_with_vigenere(p, key, fp);
+	}
+	if (strcmp(method, "rc4") == 0){
+		deencrypt_with_rc4(p, key, fp);
+	}
+}
+
 void deencrypt_with_caesar(socket_t* s, char *key, FILE* fp){
 	bool there_is_text=true;
 	unsigned int buf_l = 64;
