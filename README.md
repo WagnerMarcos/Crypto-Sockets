@@ -25,4 +25,4 @@ La lógica que se utilizó es que el transmisor debe tener la capacidad de recib
 
 Todo el trabajo se realizó sin hacer uso de memoria dinámica.
 
-![Diagrama de secuencia](https://github.com/WagnerMarcos/Crypto-Sockets/blob/main/tp1.png?raw=true)
+![Diagrama de secuencia](https://github.com/WagnerMarcos/Crypto-Sockets/blob/master/tp1.png?raw=true)
